@@ -7,6 +7,9 @@ export default function App(){
     return (
         <Router>
             <Switch>
+                <Route exact path = '/'>
+                    <Login />
+                </Route>
                 <Route exact path = '/login'>
                     <Login/>
                 </Route>
