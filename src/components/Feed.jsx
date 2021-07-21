@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 
 export default function Feed() {
     const history = useHistory()
-    const url = window.location.href.includes('localhost') ? 'http://localhost:4000' : `https://geek-overflow-backend.herokuapp.com/`
+    const url = window.location.href.includes('localhost') ? 'http://localhost:4000' : `https://geek-overflow-backend.herokuapp.com`
 
     const logoutHandler = async () => {
         let token = window.localStorage.getItem('access_Token')
