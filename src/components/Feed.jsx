@@ -10,6 +10,7 @@ import Suggestions from "./Suggestions";
 export default function Feed() {
     const [posts, setPosts] = useState([])
     const [isLoading, setIsLoading] = useState(false)
+    const [isPosting, setIsPosting] = useState(false)
     const { isOpen, onOpen, onClose } = useDisclosure()
     const postRef = useRef()
     const history = useHistory()
@@ -61,16 +62,19 @@ export default function Feed() {
             return
         }
         try {
+            setIsPosting(true)
             let response = await axios.post(postsUrl, {
                 post: postRef.current.value
             })
             let data = await response.data
             if (response.status !== 200) {
                 alert(data.message)
+                setIsPosting(false)
             }
             else {
-                alert('Successfully created a new post!')
+                // alert('Successfully created a new post!')
                 posts.push(data.message)
+                setIsPosting(false)
                 onClose()
             }
         }
@@ -89,8 +93,8 @@ export default function Feed() {
                         <Button colorScheme='red' onClick={logoutHandler}>Logout</Button>
                     </Box>
                 </Box>
-                <Box display='flex'  width='100%' pb='2rem' pt = '12vh' px = '5rem' justifyContent = 'flex-start' alignItems='flex-start'>
-                    <Box d='flex' flexDirection = 'column' width = '50%'>
+                <Box display='flex' width='100%' pb='2rem' pt='12vh' px='5rem' justifyContent='flex-start' alignItems='flex-start'>
+                    <Box d='flex' flexDirection='column' width='50%'>
                         <Text fontSize='3xl' fontWeight='semibold' my='1rem' >Posts by your friends</Text>
                         {
                             !isLoading && posts.length === 0 &&
@@ -104,7 +108,7 @@ export default function Feed() {
                             isLoading && <Progress size="xs" isIndeterminate width='100%' />
                         }
                     </Box>
-                    <Suggestions/>
+                    <Suggestions />
                 </Box>
             </VStack>
             <Box
@@ -135,9 +139,15 @@ export default function Feed() {
                     </ModalBody>
 
                     <ModalFooter style={{ borderTop: '1px solid lightblue' }}>
-                        <Button onClick={onClose} mr='1rem'>Cancel</Button>
+                        <Button onClick={onClose} mr='1rem' disabled={isPosting}>Cancel</Button>
 
-                        <Button colorScheme="blue" mr={3} onClick={newPostHandler}>
+                        <Button
+                            colorScheme={!isPosting ? "blue" : 'gray'}
+                            mr={3}
+                            onClick={newPostHandler}
+                            isLoading={isPosting}
+                            loadingText = 'Posting...'
+                        >
                             Post
                         </Button>
                     </ModalFooter>
