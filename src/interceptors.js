@@ -6,7 +6,6 @@ export default function interceptors(history) {
 
     axios.interceptors.request.use(function(req) {
         // Do something before request is sent
-        console.log(req.method, req.url)
         let access_Token = window.localStorage.getItem('access_Token')
 
         if (access_Token) {
@@ -18,7 +17,6 @@ export default function interceptors(history) {
         return req;
     }, function(error) {
         // Do something with request error
-        console.log('Error: ', error.message)
         return Promise.reject(error);
     });
 
@@ -31,9 +29,7 @@ export default function interceptors(history) {
         // Do something with response error
         let { status } = error.response
         let originalRequest = error.config
-        console.log(status)
         if (status === 403) {
-            console.log('here')
             await refreshAccessToken()
             return axios(originalRequest)
         } else if (status === 401) {
@@ -53,9 +49,7 @@ async function refreshAccessToken() {
             'content-type': 'application/json'
         }
     })
-    console.log("Response status : " + response.status)
     let data = await response.json()
-    console.log(data)
     if (response.status === 200) {
         window.localStorage.setItem('access_Token', data.access_Token)
     }

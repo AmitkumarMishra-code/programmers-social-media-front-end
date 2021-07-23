@@ -20,7 +20,7 @@ export default function Post({ post, likes, created, author }) {
     }
 
     return (
-        <Box display='flex' flexDirection='column' justifyContent='flex-start' alignItems='flex-start' p='2rem' width='50%' boxShadow='md'>
+        <Box display='flex' flexDirection='column' justifyContent='flex-start' alignItems='flex-start' p='2rem' width='80%' boxShadow='md'>
             <Text fontSize='sm' color='blue' fontWeight='semibold' mb='0.5rem'>@{author}</Text>
             <Text fontSize='2xl' fontWeight='bold' mb='0.5rem'>{post}</Text>
             <Text fontSize='md' color='gray' mb='0.5rem'>Posted on: {getTime()}</Text>

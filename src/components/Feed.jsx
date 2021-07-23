@@ -5,6 +5,7 @@ import { BsFillPlusCircleFill } from 'react-icons/bs'
 import { useRef } from "react";
 import Post from "./Post";
 import axios from "axios";
+import Suggestions from "./Suggestions";
 
 export default function Feed() {
     const [posts, setPosts] = useState([])
@@ -12,7 +13,7 @@ export default function Feed() {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const postRef = useRef()
     const history = useHistory()
-    const logoutUrl = '/auth/logout'
+    const logoutUrl = '/logout'
     const postsUrl = '/post/'
 
     const logoutHandler = async () => {
@@ -79,17 +80,17 @@ export default function Feed() {
     }
 
     return (
-        <Box display='flex' flexDirection='column' width='100vw' position='relative'>
+        <Box display='flex' flexDirection='column' width='100%' position='relative' >
             <VStack>
-                <Box display='flex' justifyContent='space-between' alignItems='center' boxShadow='md' width='100%' px='2rem' py='1rem'>
+                <Box bgColor='white' display='flex' justifyContent='space-between' alignItems='center' boxShadow='md' width='100%' px='2rem' py='1rem' position='fixed' top='0'>
                     <Text fontSize='4xl' fontWeight='bold' color='twitter.500'>GeekOverflow</Text>
                     <Box >
                         <Button colorScheme='purple' mr='1rem'>Profile</Button>
                         <Button colorScheme='red' onClick={logoutHandler}>Logout</Button>
                     </Box>
                 </Box>
-                <Box display='flex' flexDirection='column' width='50%' p='2rem'>
-                    <VStack>
+                <Box display='flex'  width='100%' pb='2rem' pt = '12vh' px = '5rem' justifyContent = 'flex-start' alignItems='flex-start'>
+                    <Box d='flex' flexDirection = 'column' width = '50%'>
                         <Text fontSize='3xl' fontWeight='semibold' my='1rem' >Posts by your friends</Text>
                         {
                             !isLoading && posts.length === 0 &&
@@ -102,7 +103,8 @@ export default function Feed() {
                         {
                             isLoading && <Progress size="xs" isIndeterminate width='100%' />
                         }
-                    </VStack>
+                    </Box>
+                    <Suggestions/>
                 </Box>
             </VStack>
             <Box
