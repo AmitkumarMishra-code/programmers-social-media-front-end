@@ -66,7 +66,7 @@ export default function Suggestions() {
                     suggestionsToDisplay.map((user, idx) => <UserCard
                         key={idx}
                         username={user.username}
-                        image={axios.defaults.baseURL + user.photoURL}
+                        image={axios.defaults.baseURL + user.photoURL.includes('/static') ? user.photoURL.substring(7) : user.photoURL}
                         followers={user.followers.length}
                         followHandler={followHandler}
                     />
