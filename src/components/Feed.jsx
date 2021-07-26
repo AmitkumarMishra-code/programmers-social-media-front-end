@@ -77,7 +77,7 @@ export default function Feed() {
             }
             else {
                 let newLikesMap = posts.likesMap.map((post, index) => index === idx ? !isLiked : post)
-                let newPosts = posts.posts.map((post, index) => index === idx ? { ...post, likes: [...post.likes, index] } : post)
+                let newPosts = posts.posts.map((post, index) => index === idx ? { ...post, likes: !isLiked ? [...post.likes, index] : post.likes.slice(0, post.likes.length-1) } : post)
                 setPosts({ posts: newPosts, likesMap: newLikesMap })
             }
         }
