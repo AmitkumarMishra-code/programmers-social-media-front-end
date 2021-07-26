@@ -4,6 +4,7 @@ import { Link as profileLink } from 'react-router-dom';
 
 
 export default function UserCard({ username, image, followers, followHandler }) {
+    console.log(image)
     const [loading, setLoading] = useState(false)
     return (
         <Box bgColor='cyan' p='1rem' width='100%' d='flex' flexDirection='column' borderRadius='12px' boxShadow='lg'>
