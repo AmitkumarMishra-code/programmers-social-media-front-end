@@ -6,7 +6,7 @@ import UserCard from "./UserCard";
 const usersUrl = '/users/'
 const followUrl = '/follow/'
 
-export default function Suggestions() {
+export default function Suggestions({getPosts}) {
     const [isLoading, setIsLoading] = useState(false)
     const [suggestedUsers, setSuggestedUsers] = useState([])
     const [suggestionsToDisplay, setSuggestionsToDisplay] = useState([])
@@ -17,9 +17,7 @@ export default function Suggestions() {
             usersToDisplay = [...suggestedUsers]
         }
         else {
-            for (let i = 0; i < 5; i++) {
-                usersToDisplay[i] = suggestedUsers[i]
-            }
+            usersToDisplay = suggestedUsers.slice(0,5)
         }
         setSuggestionsToDisplay(usersToDisplay)
     }, [suggestedUsers])
@@ -51,6 +49,7 @@ export default function Suggestions() {
             let newUsers = suggestedUsers.filter(user => user.username !== username)
             setSuggestedUsers(newUsers)
             setLoading(false)
+            getPosts()
         }
     }
 
