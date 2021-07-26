@@ -144,6 +144,8 @@ export default function Feed() {
                                 likeHandler={likeHandler}
                                 id={post._id}
                                 index={idx}
+                                name = {post.author.name}
+                                image = {axios.defaults.baseURL + (post.author.photoURL.includes('static/') ? post.author.photoURL.substring(6) : post.author.photoURL)}
                             />)
                         }
                         {
