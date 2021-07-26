@@ -77,7 +77,8 @@ export default function Feed() {
             }
             else {
                 let newLikesMap = posts.likesMap.map((post, index) => index === idx ? !isLiked : post)
-                setPosts({ ...posts, likesMap: newLikesMap })
+                let newPosts = posts.posts.map((post, index) => index === idx ? { ...post, likes: [...post.likes, index] } : post)
+                setPosts({ posts: newPosts, likesMap: newLikesMap })
             }
         }
         catch (error) {
@@ -106,7 +107,7 @@ export default function Feed() {
                                 isLiked={posts.likesMap[idx]}
                                 likeHandler={likeHandler}
                                 id={post._id}
-                                index = {idx}
+                                index={idx}
                             />)
                         }
                         {
@@ -121,6 +122,7 @@ export default function Feed() {
                 right='20px'
                 bottom='20px'
                 width='45px'
+                cursor='pointer'
             >
                 <BsFillPlusCircleFill
                     color='blue'

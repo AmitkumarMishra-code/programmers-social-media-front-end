@@ -29,7 +29,7 @@ export default function Post({ post, likes, created, author, isLiked, likeHandle
             <Text fontSize='2xl' fontWeight='bold' mb='0.5rem'>{post}</Text>
             <Text fontSize='md' color='gray' mb='0.5rem'>Posted on: {getTime()}</Text>
             <Box d='flex' justifyContent='center' alignItems='center'>
-                <Text mr='1rem'>{likes.length} likes </Text>
+                <Text mr='1rem'>{likes.length} {likes.length === 1 ? 'like':'likes'} </Text>
                 <Circle
                     border='1px'
                     borderStyle='solid'

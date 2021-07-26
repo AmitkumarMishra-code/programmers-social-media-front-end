@@ -156,7 +156,15 @@ export default function SignUp() {
                             />
 
                             <Box d='flex' justifyContent='flex-start' mb='1rem' alignItems='center'>
-                                <label htmlFor='profilePic' style={{ marginRight: '1rem' }}><Button colorScheme='green' as='span'>Upload Photo</Button></label>
+                                <label htmlFor='profilePic' style={{ marginRight: '1rem' }}>
+                                    <Button
+                                        colorScheme='green'
+                                        as='span'
+                                        disabled = {buttonLoading}
+                                        >
+                                        Upload Photo
+                                    </Button>
+                                </label>
                                 <input
                                     accept="image/*"
                                     id="profilePic"
