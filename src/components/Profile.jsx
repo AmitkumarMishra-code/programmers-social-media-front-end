@@ -104,7 +104,7 @@ export default function Profile() {
                                     {user.currentlyFollowing ? 'Unfollow' : 'Follow'}
                                 </Button>}
                         </Box>
-                        <Box><Text fontSize='sm' fontWeight='semibold' mr='1rem'>Following : {user.following}</Text><Text fontSize='sm' fontWeight='semibold'> Followers: {user.followers}</Text></Box>
+                        <Box display='flex'><Text fontSize='sm' fontWeight='semibold' mr='1rem'>Following : {user.following}</Text><Text fontSize='sm' fontWeight='semibold'> Followers: {user.followers}</Text></Box>
                     </Box>
                 }
             </Box>
