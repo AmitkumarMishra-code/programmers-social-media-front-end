@@ -21,6 +21,7 @@ export default function AppBar() {
                 })
             }
             else {
+                history.push('/')
                 window.localStorage.removeItem('access_Token')
                 window.localStorage.removeItem('refresh_Token')
                 toast({
@@ -29,7 +30,6 @@ export default function AppBar() {
                     duration:2000,
                     status: 'info'
                 })
-                history.push('/')
             }
         }
         catch (error) {
