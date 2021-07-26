@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Image, Progress, Text } from "@chakra-ui/react";
+import { Box, Button, CircularProgress, Image, Progress, Text, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -11,6 +11,7 @@ export default function Profile() {
     const [posts, setPosts] = useState({})
     const { id } = useParams()
     const [isFollowing, setIsFollowing] = useState(false)
+    const toast = useToast()
 
     const getProfile = async (link) => {
         setIsLoading(true)
@@ -19,13 +20,25 @@ export default function Profile() {
             let data = await response.data
 
             if (response.status !== 200) {
-                alert(data.message)
+                toast({
+                    title: 'An Error Occurred',
+                    description: data.message,
+                    status: 'error',
+                    isClosable: true,
+                    duration: 2000
+                })
                 setIsLoading(false)
             }
             else {
                 setUser(data.message)
                 setPosts({ posts: data.message.posts, likesMap: data.message.likesMap })
                 setIsLoading(false)
+                toast({
+                    title: 'Profile loaded!',
+                    status: 'info',
+                    duration: 1000,
+                    isClosable: true
+                })
             }
         }
         catch (error) {
@@ -46,13 +59,24 @@ export default function Profile() {
             let data = await response.data
 
             if (response.status !== 200) {
-                console.log('here')
-                alert(data.message)
+                toast({
+                    title: 'An Error Occurred',
+                    description: data.message,
+                    status: 'error',
+                    isClosable: true,
+                    duration: 2000
+                })
                 setIsFollowing(false)
             }
             else {
-                setUser({ ...user, currentlyFollowing: !user.currentlyFollowing, following : user.currentlyFollowing ? user.following - 1 : user.following + 1 })
-            setIsFollowing(false)
+                setUser({ ...user, currentlyFollowing: !user.currentlyFollowing, following: user.currentlyFollowing ? user.following - 1 : user.following + 1 })
+                setIsFollowing(false)
+                toast({
+                    title: user.currentlyFollowing ? 'Unfollowed!' : 'Followed!',
+                    status: 'info',
+                    duration: 1500,
+                    isClosable: true
+                })
             }
         }
         catch (error) {
@@ -67,11 +91,23 @@ export default function Profile() {
             let response = await axios.post(likeUrl)
             let data = await response.data
             if (response.status !== 200) {
-                alert(data.message)
+                toast({
+                    title: 'An Error Occurred',
+                    description: data.message,
+                    status: 'error',
+                    isClosable: true,
+                    duration:3000
+                })
             }
             else {
                 let newLikesMap = posts.likesMap.map((post, index) => index === idx ? !isLiked : post)
                 setPosts({ ...posts, likesMap: newLikesMap })
+                toast({
+                    title: !isLiked ? 'Post Liked!' : 'Post Unliked!',
+                    status: 'success',
+                    duration: 1500,
+                    isClosable: true
+                })
             }
         }
         catch (error) {
@@ -98,8 +134,8 @@ export default function Profile() {
                                     backgroundColor={user.currentlyFollowing ? 'red' : 'twitter.500'}
                                     color='white'
                                     onClick={followHandler}
-                                    isLoading = {isFollowing}
-                                    loadingText = {user.currentlyFollowing ? 'Unfollowing...' : 'Following...'}
+                                    isLoading={isFollowing}
+                                    loadingText={user.currentlyFollowing ? 'Unfollowing...' : 'Following...'}
                                 >
                                     {user.currentlyFollowing ? 'Unfollow' : 'Follow'}
                                 </Button>}

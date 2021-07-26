@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, Input, InputGroup, InputRightElement, Link, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, FormControl, Input, InputGroup, InputRightElement, Link, Text, useToast, VStack } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { Link as LoginLink, useHistory } from 'react-router-dom'
@@ -15,6 +15,7 @@ export default function SignUp() {
     const confirmPasswordRef = useRef()
     const url = window.location.href.includes('localhost') ? 'http://localhost:4000' : `https://geek-overflow-backend.herokuapp.com`
     const history = useHistory()
+    const toast = useToast()
 
     const showPasswordHandler = () => {
         setShowPassword('text')
@@ -44,9 +45,21 @@ export default function SignUp() {
                 console.log(errorMessage)
                 setErrorMessage(errorMessage.message)
                 setButtonLoading(false)
+                toast({
+                    title: "We Encountered an Error",
+                    status: 'error',
+                    duration: 3000,
+                    isClosable:true
+                })
                 return
             }
             else {
+                toast({
+                    title: "Account Created",
+                    status: 'success',
+                    duration: 1500,
+                    isClosable:true
+                })
                 history.push('/login')
             }
         }
@@ -160,8 +173,8 @@ export default function SignUp() {
                                     <Button
                                         colorScheme='green'
                                         as='span'
-                                        disabled = {buttonLoading}
-                                        >
+                                        disabled={buttonLoading}
+                                    >
                                         Upload Photo
                                     </Button>
                                 </label>

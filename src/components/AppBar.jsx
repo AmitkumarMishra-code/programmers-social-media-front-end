@@ -1,21 +1,34 @@
-import { Box, Button, Link, Text } from "@chakra-ui/react";
+import { Box, Button, Link, Text, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { Link as profileLink, useHistory, Link as homeLink } from "react-router-dom";
 
 export default function AppBar() {
     const history = useHistory()
     const logoutUrl = '/logout'
+    const toast = useToast()
 
     const logoutHandler = async () => {
         try {
             let response = await axios.get(logoutUrl)
             if (response.status !== 200) {
                 let errorMessage = await response.data
-                alert(errorMessage.message)
+                toast({
+                    title: 'An Error Occurred',
+                    description: errorMessage.message,
+                    status: 'error',
+                    isClosable: true,
+                    duration:3000
+                })
             }
             else {
                 window.localStorage.removeItem('access_Token')
                 window.localStorage.removeItem('refresh_Token')
+                toast({
+                    title:'Logged Out!',
+                    isClosable:true,
+                    duration:2000,
+                    status: 'info'
+                })
                 history.push('/')
             }
         }

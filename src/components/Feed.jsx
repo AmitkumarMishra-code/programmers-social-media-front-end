@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Progress, Text, Textarea, useDisclosure, VStack } from "@chakra-ui/react";
+import { Box, Button, FormControl, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Progress, Text, Textarea, useDisclosure, useToast, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { BsFillPlusCircleFill } from 'react-icons/bs'
 import { useRef } from "react";
@@ -14,6 +14,7 @@ export default function Feed() {
     const postRef = useRef()
     const postsUrl = '/feed/'
     const createPostUrl = '/post/'
+    const toast = useToast()
 
 
     const getPosts = async () => {
@@ -23,12 +24,24 @@ export default function Feed() {
             let data = await response.data
 
             if (response.status !== 200) {
-                alert(data.message)
                 setIsLoading(false)
+                toast({
+                    title: 'Error Loading Posts!',
+                    description: data.message,
+                    status: 'error',
+                    isClosable: true,
+                    duration:3000
+                })
             }
             else {
                 setPosts(data.message)
                 setIsLoading(false)
+                toast({
+                    title:'Posts Loaded Successfully!',
+                    status: 'success',
+                    duration: 500,
+                    isClosable: true
+                })
             }
         }
         catch (error) {
@@ -38,6 +51,7 @@ export default function Feed() {
 
     useEffect(() => {
         getPosts()
+        // eslint-disable-next-line
     }, [])
 
 
@@ -52,12 +66,22 @@ export default function Feed() {
             })
             let data = await response.data
             if (response.status !== 200) {
-                alert(data.message)
+                toast({
+                    title: 'An Error Occurred',
+                    description: data.message,
+                    status: 'error',
+                    isClosable: true,
+                    duration:2000
+                })
                 setIsPosting(false)
             }
             else {
-                // alert('Successfully created a new post!')
-
+                toast({
+                    title:'Successfully created a new post!',
+                    status: 'success',
+                    duration: 1500,
+                    isClosable: true
+                })
                 setIsPosting(false)
                 onClose()
             }
@@ -73,12 +97,24 @@ export default function Feed() {
             let response = await axios.post(likeUrl)
             let data = await response.data
             if (response.status !== 200) {
-                alert(data.message)
+                toast({
+                    title: 'An Error Occurred',
+                    description: data.message,
+                    status: 'error',
+                    isClosable: true,
+                    duration:2000
+                })
             }
             else {
                 let newLikesMap = posts.likesMap.map((post, index) => index === idx ? !isLiked : post)
                 let newPosts = posts.posts.map((post, index) => index === idx ? { ...post, likes: !isLiked ? [...post.likes, index] : post.likes.slice(0, post.likes.length-1) } : post)
                 setPosts({ posts: newPosts, likesMap: newLikesMap })
+                toast({
+                    title: !isLiked ? 'Post Liked!' : 'Post Unliked!',
+                    status: 'success',
+                    duration: 1500,
+                    isClosable: true
+                })
             }
         }
         catch (error) {

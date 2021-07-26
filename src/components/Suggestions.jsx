@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Text, VStack } from "@chakra-ui/react";
+import { Box, CircularProgress, Text, useToast, VStack } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -10,6 +10,7 @@ export default function Suggestions({getPosts}) {
     const [isLoading, setIsLoading] = useState(false)
     const [suggestedUsers, setSuggestedUsers] = useState([])
     const [suggestionsToDisplay, setSuggestionsToDisplay] = useState([])
+    const toast = useToast()
 
     useEffect(() => {
         let usersToDisplay = []
@@ -28,10 +29,15 @@ export default function Suggestions({getPosts}) {
         let data = await response.data
         if (response.status !== 200) {
             setIsLoading(false)
-            alert(data.message)
+            toast({
+                title: 'An Error Occurred',
+                description: data.message,
+                status: 'error',
+                isClosable: true,
+                duration:3000
+            })
         }
         else {
-            console.log(data.message)
             setSuggestedUsers(data.message)
             setIsLoading(false)
         }
@@ -43,18 +49,31 @@ export default function Suggestions({getPosts}) {
         let data = await response.data
         if (response.status !== 200) {
             setLoading(false)
-            alert(data.message)
+            toast({
+                title: 'An Error Occurred',
+                description: data.message,
+                status: 'error',
+                isClosable: true,
+                duration:3000
+            })
         }
         else {
             let newUsers = suggestedUsers.filter(user => user.username !== username)
             setSuggestedUsers(newUsers)
             setLoading(false)
+            toast({
+                title:`Followed ${username} successfully!`,
+                status:'success',
+                duration:1500,
+                isClosable:true
+            })
             getPosts()
         }
     }
 
     useEffect(() => {
         getUsersToFollow()
+        // eslint-disable-next-line
     }, [])
 
     return (
