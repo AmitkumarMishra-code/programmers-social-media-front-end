@@ -48,7 +48,7 @@ export default function Profile() {
                 alert(data.message)
             }
             else {
-                setUser({ ...user, currentlyFollowing: !user.currentlyFollowing })
+                setUser({ ...user, currentlyFollowing: !user.currentlyFollowing, following : user.currentlyFollowing ? user.following - 1 : user.following + 1 })
             }
         }
         catch (error) {
@@ -80,23 +80,25 @@ export default function Profile() {
                 {
                     isLoading && <CircularProgress size="xs" isIndeterminate width='25%' />
                 }
-                {user && <Box d='flex' justifyContent='center' alignItems='center' flexDirection='column' mb='2rem' width='50%'>
-                    <Text fontSize='4xl' fontWeight='bold' mb='1rem'>{user.name}</Text>
-                    <Image mb='1rem' borderRadius='50%' width='125px' height='125px' objectFit='cover' src={axios.defaults.baseURL + (user.photoURL.includes('static/') ? user.photoURL.substring(6) : user.photoURL)} />
-                    <Box display='flex' justifyContent='center' alignItems='center' width='100%' mb='1rem'>
-                        <Text fontSize='md' fontWeight='bold' mr='3rem'>@{user.username}</Text>
-                        {!user.self &&
-                            <Button
-                                size='sm'
-                                backgroundColor={user.currentlyFollowing ? 'red' : 'twitter.500'}
-                                color='white'
-                                onClick={followHandler}
-                            >
-                                {user.currentlyFollowing ? 'Unfollow' : 'Follow'}
-                            </Button>}
+                {
+                    user &&
+                    <Box d='flex' justifyContent='center' alignItems='center' flexDirection='column' mb='2rem' width='50%'>
+                        <Text fontSize='4xl' fontWeight='bold' mb='1rem'>{user.name}</Text>
+                        <Image mb='1rem' borderRadius='50%' width='125px' height='125px' objectFit='cover' src={axios.defaults.baseURL + (user.photoURL.includes('static/') ? user.photoURL.substring(6) : user.photoURL)} />
+                        <Box display='flex' justifyContent='center' alignItems='center' width='100%' mb='1rem'>
+                            <Text fontSize='md' fontWeight='bold' mr='3rem'>@{user.username}</Text>
+                            {!user.self &&
+                                <Button
+                                    size='sm'
+                                    backgroundColor={user.currentlyFollowing ? 'red' : 'twitter.500'}
+                                    color='white'
+                                    onClick={followHandler}
+                                >
+                                    {user.currentlyFollowing ? 'Unfollow' : 'Follow'}
+                                </Button>}
+                        </Box>
+                        <Text fontSize='sm' fontWeight='semibold'>Following : {user.following} Followers: {user.followers}</Text>
                     </Box>
-                    <Text fontSize='sm' fontWeight='semibold'>Following : {user.following} Followers: {user.followers}</Text>
-                </Box>
                 }
             </Box>
             <Box d='flex' justifyContent='center' alignItems='center' flexDirection='column' width='50%'>
