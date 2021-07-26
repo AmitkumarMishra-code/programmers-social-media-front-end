@@ -65,7 +65,7 @@ export default function Suggestions({getPosts}) {
                     suggestionsToDisplay.map((user, idx) => <UserCard
                         key={idx}
                         username={user.username}
-                        image={user.photoURL}
+                        image={'/'+user.photoURL}
                         followers={user.followers.length}
                         followHandler={followHandler}
                     />
