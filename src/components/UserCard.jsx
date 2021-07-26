@@ -21,7 +21,7 @@ export default function UserCard({ username, image, followers, followHandler }) 
                         @{username}
                     </Link>
                 </Text>
-                <Image borderRadius='50%' width='35px' src={image} alt='Profile Image' /></Box>
+                <Image borderRadius='50%' width='35px' height='35px' objectFit='cover' src={image} alt='Profile Image' /></Box>
             <Box d='flex' justifyContent='space-between' alignItems='center' mt='1rem'>
                 <Text fontSize='md'>Followers : {followers}</Text>
                 <Button
