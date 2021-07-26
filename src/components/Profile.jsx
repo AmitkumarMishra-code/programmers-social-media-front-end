@@ -10,6 +10,7 @@ export default function Profile() {
     const [user, setUser] = useState(null)
     const [posts, setPosts] = useState({})
     const { id } = useParams()
+    const [isFollowing, setIsFollowing] = useState(false)
 
     const getProfile = async (link) => {
         setIsLoading(true)
@@ -38,6 +39,7 @@ export default function Profile() {
     }, [])
 
     const followHandler = async () => {
+        setIsFollowing(true)
         const url = user.currentlyFollowing ? '/unfollow/' : '/follow/'
         try {
             let response = await axios.post(url + user.username)
@@ -46,13 +48,16 @@ export default function Profile() {
             if (response.status !== 200) {
                 console.log('here')
                 alert(data.message)
+                setIsFollowing(false)
             }
             else {
                 setUser({ ...user, currentlyFollowing: !user.currentlyFollowing, following : user.currentlyFollowing ? user.following - 1 : user.following + 1 })
+            setIsFollowing(false)
             }
         }
         catch (error) {
             alert(error.message)
+            setIsFollowing(false)
         }
     }
 
@@ -93,11 +98,13 @@ export default function Profile() {
                                     backgroundColor={user.currentlyFollowing ? 'red' : 'twitter.500'}
                                     color='white'
                                     onClick={followHandler}
+                                    isLoading = {isFollowing}
+                                    loadingText = {user.currentlyFollowing ? 'Unfollowing...' : 'Following...'}
                                 >
                                     {user.currentlyFollowing ? 'Unfollow' : 'Follow'}
                                 </Button>}
                         </Box>
-                        <Text fontSize='sm' fontWeight='semibold'>Following : {user.following} Followers: {user.followers}</Text>
+                        <Box><Text fontSize='sm' fontWeight='semibold' mr='1rem'>Following : {user.following}</Text><Text fontSize='sm' fontWeight='semibold'> Followers: {user.followers}</Text></Box>
                     </Box>
                 }
             </Box>
