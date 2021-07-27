@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Image, Progress, Text, useToast } from "@chakra-ui/react";
+import { Box, Button, Image, Progress, Text, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
