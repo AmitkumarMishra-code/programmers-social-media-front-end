@@ -2,7 +2,6 @@ import { Box, Circle, Image, Link, Text } from "@chakra-ui/react";
 import { useState } from "react";
 import { AiOutlineLike } from 'react-icons/ai'
 import { Link as profileLink } from 'react-router-dom';
-import { ReactComponent as User } from '../user.svg'
 
 
 export default function Post({ post, likes, created, author, isLiked, likeHandler, id, index, name, image }) {
@@ -28,7 +27,7 @@ export default function Post({ post, likes, created, author, isLiked, likeHandle
                     !imageError ?
                         <Image borderRadius='50%' width='5rem' height='5rem' objectFit='cover' src={image} alt={author} mr='2rem' onError={imageDisplayHandler} />
                         :
-                        <User borderRadius='50%' width='5rem' height='5rem' />
+                        <Image borderRadius='50%' width='5rem' height='5rem' objectFit='cover' src='/blank.png' alt={author} mr='2rem' onError={imageDisplayHandler} />
                 }
                 <Box display='flex' flexDirection='column' color='black' justifyContent='space-evenly' height='5rem' alignItems='flex-start' mb='0.5rem'>
                     <Text fontSize='xl' fontWeight='semibold'>{name}</Text>
