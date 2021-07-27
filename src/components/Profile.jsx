@@ -136,7 +136,7 @@ export default function Profile() {
                         { !imageError ? 
                             <Image mb='1rem' borderRadius='50%' width='125px' height='125px' objectFit='cover' src={axios.defaults.baseURL + (user.photoURL.includes('static/') ? user.photoURL.substring(6) : user.photoURL)} onError={imageDisplayHandler}/>
                             :
-                            <Image borderRadius='50%' width='5rem' height='5rem' objectFit='cover' src='/blank.png' alt='null' mr='2rem'/>
+                            <Image borderRadius='50%' width='125px' height='125px' objectFit='cover' src='/blank.png' alt='null' mr='2rem'/>
                         }
                         <Box display='flex' justifyContent='center' alignItems='center' width='100%' mb='1rem'>
                             <Text fontSize='md' fontWeight='bold' mr='3rem'>@{user.username}</Text>
