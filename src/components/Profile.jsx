@@ -1,8 +1,8 @@
-import { Box, Button, Image, Progress, Text, useToast } from "@chakra-ui/react";
+import { Box, Button, Image, Link, Progress, Text, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link as homeLink } from "react-router-dom";
 import Post from "./Post";
 
 export default function Profile() {
@@ -11,6 +11,7 @@ export default function Profile() {
     const [posts, setPosts] = useState({})
     const { id } = useParams()
     const [isFollowing, setIsFollowing] = useState(false)
+    const [error, setError] = useState(null)
     const toast = useToast()
 
     const getProfile = async (link) => {
@@ -20,6 +21,7 @@ export default function Profile() {
             let data = await response.data
 
             if (response.status !== 200) {
+                console.log('in status false')
                 toast({
                     title: 'An Error Occurred',
                     description: data.message,
@@ -28,6 +30,8 @@ export default function Profile() {
                     duration: 2000
                 })
                 setIsLoading(false)
+                setError('An Unexpected Error Occurred!')
+                setUser(null)
             }
             else {
                 setUser(data.message)
@@ -42,7 +46,9 @@ export default function Profile() {
             }
         }
         catch (error) {
-            alert(error.message)
+            setIsLoading(false)
+            setError('User Does Not Exist!')
+            setUser(null)
         }
     }
 
@@ -167,6 +173,13 @@ export default function Profile() {
                 }
                 {
                     isLoading && <Progress size="xs" isIndeterminate width='100%' />
+                }
+                {
+                    !isLoading && !user && error &&
+                    <Box mt='5rem' d='flex' justifyContent='center' alignItems='center' flexDirection='column'>
+                        <Text fontSize='3xl' fontWeight='semibold'>{error}</Text>
+                        <Text><Link as={homeLink} to='/feed' color='twitter.500' style={{ textDecoration: 'none' }}>Click here to go home!</Link></Text>
+                    </Box>
                 }
             </Box>
         </Box>
