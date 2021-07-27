@@ -119,9 +119,6 @@ export default function Profile() {
         <Box d='flex' justifyContent='center' alignItems='center' flexDirection='column' width='100%' pt='12vh' px='5rem'>
             <Box width='100%' d='flex' justifyContent='center' alignItems='center' flexDirection='column'>
                 {
-                    isLoading && <CircularProgress size="xs" isIndeterminate width='25%' />
-                }
-                {
                     user &&
                     <Box d='flex' justifyContent='center' alignItems='center' flexDirection='column' mb='2rem' width='50%'>
                         <Text fontSize='4xl' fontWeight='bold' mb='1rem'>{user.name}</Text>
@@ -164,7 +161,7 @@ export default function Profile() {
                         likeHandler={likeHandler}
                         id={post._id}
                         index={idx}
-                        name = {post.author.name}
+                        name={post.author.name}
                         image={axios.defaults.baseURL + (post.author.photoURL.includes('static/') ? post.author.photoURL.substring(6) : post.author.photoURL)}
                     />)
                 }
