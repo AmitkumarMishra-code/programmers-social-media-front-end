@@ -163,7 +163,7 @@ export default function Feed() {
                 cursor='pointer'
             >
                 <BsFillPlusCircleFill
-                    color='blue'
+                    style = {{color:'#1da1f2'}}
                     size='xl'
                     onClick={onOpen}
                 />

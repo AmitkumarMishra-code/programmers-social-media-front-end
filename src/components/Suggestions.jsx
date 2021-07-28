@@ -1,15 +1,18 @@
-import { Box, CircularProgress, Text, useToast, VStack } from "@chakra-ui/react";
+import { Box, IconButton, CircularProgress, Text, useToast, Tooltip } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import UserCard from "./UserCard";
+import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from 'react-icons/ai'
 const usersUrl = '/users/'
 const followUrl = '/follow/'
 
-export default function Suggestions({getPosts}) {
+export default function Suggestions({ getPosts }) {
     const [isLoading, setIsLoading] = useState(false)
     const [suggestedUsers, setSuggestedUsers] = useState([])
     const [suggestionsToDisplay, setSuggestionsToDisplay] = useState([])
+    const [drawerOpen, setDrawerOpen] = useState(true)
+    const [position, setPosition] = useState('5%')
     const toast = useToast()
 
     useEffect(() => {
@@ -18,7 +21,7 @@ export default function Suggestions({getPosts}) {
             usersToDisplay = [...suggestedUsers]
         }
         else {
-            usersToDisplay = suggestedUsers.slice(0,5)
+            usersToDisplay = suggestedUsers.slice(0, 5)
         }
         setSuggestionsToDisplay(usersToDisplay)
     }, [suggestedUsers])
@@ -34,7 +37,7 @@ export default function Suggestions({getPosts}) {
                 description: data.message,
                 status: 'error',
                 isClosable: true,
-                duration:3000
+                duration: 3000
             })
         }
         else {
@@ -54,7 +57,7 @@ export default function Suggestions({getPosts}) {
                 description: data.message,
                 status: 'error',
                 isClosable: true,
-                duration:3000
+                duration: 3000
             })
         }
         else {
@@ -62,10 +65,10 @@ export default function Suggestions({getPosts}) {
             setSuggestedUsers(newUsers)
             setLoading(false)
             toast({
-                title:`Followed ${username} successfully!`,
-                status:'success',
-                duration:1500,
-                isClosable:true
+                title: `Followed ${username} successfully!`,
+                status: 'success',
+                duration: 1500,
+                isClosable: true
             })
             getPosts()
         }
@@ -76,22 +79,53 @@ export default function Suggestions({getPosts}) {
         // eslint-disable-next-line
     }, [])
 
+    useEffect(() => {
+        setPosition(drawerOpen ? '5%' : '-20%')
+    }, [drawerOpen])
+
+    const drawerHandler = () => {
+        setDrawerOpen(!drawerOpen)
+    }
+
     return (
-        <Box position='fixed' right='5%' minHeight='88vh' bgColor='lightcyan' p='1rem' width = '20%' boxShadow = 'lg' borderRadius = '12px' >
-            <VStack>
-                {isLoading && suggestionsToDisplay.length === 0 && <CircularProgress isIndeterminate />}
-                {!isLoading && suggestionsToDisplay.length > 0 ?
-                    suggestionsToDisplay.map((user, idx) => <UserCard
-                        key={idx}
-                        username={user.username}
-                        image={axios.defaults.baseURL + (user.photoURL.includes('static/') ? user.photoURL.substring(6) : user.photoURL)}
-                        followers={user.followers.length}
-                        followHandler={followHandler}
-                    />
-                    ) :
-                    <Text fontSize='l'>Nothing to display for now...</Text>
-                }
-            </VStack>
+        <Box
+            display='flex'
+            flexDirection='column'
+            justifyContent={suggestionsToDisplay.length >3 ? 'space-around' : 'flex-start'}
+            alignItems='flex-start'
+            position='fixed'
+            transition='all 500ms ease-in'
+            right={position}
+            minHeight='88vh'
+            bgColor='lightcyan'
+            p='1rem'
+            width='20%'
+            boxShadow='lg'
+            borderRadius='12px'
+        >
+            {isLoading && suggestionsToDisplay.length === 0 && <CircularProgress isIndeterminate />}
+            {!isLoading && suggestionsToDisplay.length > 0 ?
+                suggestionsToDisplay.map((user, idx) => <UserCard
+                    key={idx}
+                    username={user.username}
+                    image={axios.defaults.baseURL + (user.photoURL.includes('static/') ? user.photoURL.substring(6) : user.photoURL)}
+                    followers={user.followers.length}
+                    followHandler={followHandler}
+                />
+                ) :
+                <Text fontSize='l'>Nothing to display for now...</Text>
+            }
+            <Tooltip label={drawerOpen ? 'Close Drawer' : 'Open Drawer'} fontSize='sm' bg='transparent' color="black">
+                <IconButton
+                    variant='ghost'
+                    aria-label="Drawer Control"
+                    icon={drawerOpen ? <AiOutlineDoubleRight /> : <AiOutlineDoubleLeft />}
+                    onClick={drawerHandler}
+                    position='absolute'
+                    left='-40px'
+                    top='44vh'
+                />
+            </Tooltip>
         </Box>
     )
 }

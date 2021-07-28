@@ -12,7 +12,7 @@ export default function UserCard({ username, image, followers, followHandler }) 
     }
 
     return (
-        <Box bgColor='cyan' p='1rem' width='100%' d='flex' flexDirection='column' borderRadius='12px' boxShadow='lg'>
+        <Box bgColor='cyan' p='1rem' width='100%' d='flex' flexDirection='column' borderRadius='12px' boxShadow='lg' mb = '1rem'>
             <Box d='flex' justifyContent='space-between' alignItems='center'>
                 <Text fontSize='md' color='blue' mr='1rem'>
                     <Link
