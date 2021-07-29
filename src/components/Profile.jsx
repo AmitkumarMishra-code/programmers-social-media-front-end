@@ -123,8 +123,7 @@ export default function Profile() {
     }
 
     const imageDisplayHandler = () => {
-        console.log(axios.defaults.baseURL)
-        console.log(user.photoURL.substring(6).replaceAll('\\', '/'))
+        console.log(axios.defaults.baseURL + user.photoURL.substring(6).replaceAll('\\', '/'))
         setImageError(true)
     }
 
@@ -135,10 +134,10 @@ export default function Profile() {
                     user &&
                     <Box d='flex' justifyContent='center' alignItems='center' flexDirection='column' mb='2rem' width='50%'>
                         <Text fontSize='4xl' fontWeight='bold' mb='1rem'>{user.name}</Text>
-                        { !imageError ? 
-                            <Image mb='1rem' borderRadius='50%' width='125px' height='125px' objectFit='cover' src={axios.defaults.baseURL + (user.photoURL.includes('static\\') ? user.photoURL.substring(6).replaceAll('\\', '/') : user.photoURL)} onError={imageDisplayHandler}/>
+                        {!imageError ?
+                            <Image mb='1rem' borderRadius='50%' width='125px' height='125px' objectFit='cover' src={axios.defaults.baseURL + (user.photoURL.includes('static\\') ? user.photoURL.substring(6).replaceAll('\\', '/') : user.photoURL)} onError={imageDisplayHandler} />
                             :
-                            <Image borderRadius='50%' width='125px' height='125px' objectFit='cover' src='/blank.png' alt='null' mr='2rem'/>
+                            <Image borderRadius='50%' width='125px' height='125px' objectFit='cover' src='/blank.png' alt='null' mr='2rem' />
                         }
                         <Box display='flex' justifyContent='center' alignItems='center' width='100%' mb='1rem'>
                             <Text fontSize='md' fontWeight='bold' mr='3rem'>@{user.username}</Text>
