@@ -145,7 +145,7 @@ export default function Feed() {
                                 id={post._id}
                                 index={idx}
                                 name = {post.author.name}
-                                image = {axios.defaults.baseURL + (post.author.photoURL.includes('static/') ? post.author.photoURL.substring(6) : post.author.photoURL)}
+                                image = {axios.defaults.baseURL + (post.author.photoURL.includes('static\\') ? post.author.photoURL.substring(6).replaceAll('\\', '/') : post.author.photoURL)}
                             />)
                         }
                         {

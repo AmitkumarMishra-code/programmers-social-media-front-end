@@ -84,7 +84,7 @@ export default function Suggestions({getPosts}) {
                     suggestionsToDisplay.map((user, idx) => <UserCard
                         key={idx}
                         username={user.username}
-                        image={axios.defaults.baseURL + (user.photoURL.includes('static/') ? user.photoURL.substring(6) : user.photoURL)}
+                        image={axios.defaults.baseURL + (user.photoURL.includes('static\\') ? user.photoURL.substring(6).replaceAll('\\', '/') : user.photoURL)}
                         followers={user.followers.length}
                         followHandler={followHandler}
                     />

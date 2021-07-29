@@ -123,6 +123,8 @@ export default function Profile() {
     }
 
     const imageDisplayHandler = () => {
+        console.log(axios.defaults.baseURL)
+        console.log(user.photoURL.substring(6).replaceAll('\\', '/'))
         setImageError(true)
     }
 
@@ -134,7 +136,7 @@ export default function Profile() {
                     <Box d='flex' justifyContent='center' alignItems='center' flexDirection='column' mb='2rem' width='50%'>
                         <Text fontSize='4xl' fontWeight='bold' mb='1rem'>{user.name}</Text>
                         { !imageError ? 
-                            <Image mb='1rem' borderRadius='50%' width='125px' height='125px' objectFit='cover' src={axios.defaults.baseURL + (user.photoURL.includes('static/') ? user.photoURL.substring(6) : user.photoURL)} onError={imageDisplayHandler}/>
+                            <Image mb='1rem' borderRadius='50%' width='125px' height='125px' objectFit='cover' src={axios.defaults.baseURL + (user.photoURL.includes('static\\') ? user.photoURL.substring(6).replaceAll('\\', '/') : user.photoURL)} onError={imageDisplayHandler}/>
                             :
                             <Image borderRadius='50%' width='125px' height='125px' objectFit='cover' src='/blank.png' alt='null' mr='2rem'/>
                         }
@@ -177,7 +179,7 @@ export default function Profile() {
                         id={post._id}
                         index={idx}
                         name={post.author.name}
-                        image={axios.defaults.baseURL + (post.author.photoURL.includes('static/') ? post.author.photoURL.substring(6) : post.author.photoURL)}
+                        image={axios.defaults.baseURL + (post.author.photoURL.includes('static\\') ? post.author.photoURL.substring(6) : post.author.photoURL)}
                     />)
                 }
                 {
