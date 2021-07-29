@@ -123,6 +123,7 @@ export default function Profile() {
     }
 
     const imageDisplayHandler = () => {
+        console.log(user.photoURL.includes('static\\'))
         console.log(axios.defaults.baseURL + user.photoURL.substring(6).replaceAll('\\', '/'))
         setImageError(true)
     }
