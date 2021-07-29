@@ -9,7 +9,6 @@ export default function Profile() {
     const [isLoading, setIsLoading] = useState(false)
     const [user, setUser] = useState(null)
     const [posts, setPosts] = useState({})
-    const [imageError, setImageError] = useState(false)
     const { id } = useParams()
     const [isFollowing, setIsFollowing] = useState(false)
     const [error, setError] = useState(null)
@@ -122,10 +121,6 @@ export default function Profile() {
         }
     }
 
-    const imageDisplayHandler = () => {
-        setImageError(true)
-    }
-
     return (
         <Box d='flex' justifyContent='center' alignItems='center' flexDirection='column' width='100%' pt='12vh' px='5rem'>
             <Box width='100%' d='flex' justifyContent='center' alignItems='center' flexDirection='column'>
@@ -133,11 +128,7 @@ export default function Profile() {
                     user &&
                     <Box d='flex' justifyContent='center' alignItems='center' flexDirection='column' mb='2rem' width='50%'>
                         <Text fontSize='4xl' fontWeight='bold' mb='1rem'>{user.name}</Text>
-                        { !imageError ? 
-                            <Image mb='1rem' borderRadius='50%' width='125px' height='125px' objectFit='cover' src={axios.defaults.baseURL + (user.photoURL.includes('static/') ? user.photoURL.substring(6) : user.photoURL)} onError={imageDisplayHandler}/>
-                            :
-                            <Image borderRadius='50%' width='125px' height='125px' objectFit='cover' src='/blank.png' alt='null' mr='2rem'/>
-                        }
+                       <Image mb='1rem' borderRadius='50%' width='125px' height='125px' objectFit='cover' src={axios.defaults.baseURL + (user.photoURL.includes('static/') ? user.photoURL.substring(6) : user.photoURL)} fallbackSrc='/blank.png'/>
                         <Box display='flex' justifyContent='center' alignItems='center' width='100%' mb='1rem'>
                             <Text fontSize='md' fontWeight='bold' mr='3rem'>@{user.username}</Text>
                             {!user.self &&

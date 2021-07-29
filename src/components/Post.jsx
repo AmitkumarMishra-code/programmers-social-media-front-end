@@ -1,11 +1,9 @@
 import { Box, Circle, Image, Link, Text } from "@chakra-ui/react";
-import { useState } from "react";
 import { AiOutlineLike } from 'react-icons/ai'
 import { Link as profileLink } from 'react-router-dom';
 
 
 export default function Post({ post, likes, created, author, isLiked, likeHandler, id, index, name, image }) {
-    const [imageError, setImageError] = useState(false)
     const getTime = () => {
         let date = new Date(created)
         let currentDate = date.getDate()
@@ -16,19 +14,10 @@ export default function Post({ post, likes, created, author, isLiked, likeHandle
         return (currentDate < 10 ? '0' + currentDate : currentDate) + '/' + (currentMonth < 10 ? '0' + currentMonth : currentMonth) + '/' + date.getFullYear() + ', ' + (hours < 10 ? '0' + hours : hours) + ':' + (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds)
     }
 
-    const imageDisplayHandler = () => {
-        setImageError(true)
-    }
-
     return (
         <Box display='flex' flexDirection='column' justifyContent='flex-start' alignItems='flex-start' width='80%' boxShadow='md' mb='2rem' borderRadius='12px'>
             <Box display='flex' p='1rem' justifyContent='flex-start' alignItems='center' width='100%' backgroundColor='cyan' borderTopRadius='12px'>
-                {
-                    !imageError ?
-                        <Image borderRadius='50%' width='5rem' height='5rem' objectFit='cover' src={image} alt={author} mr='2rem' onError={imageDisplayHandler} />
-                        :
-                        <Image borderRadius='50%' width='5rem' height='5rem' objectFit='cover' src='/blank.png' alt={author} mr='2rem' onError={imageDisplayHandler} />
-                }
+                <Image borderRadius='50%' width='5rem' height='5rem' objectFit='cover' src={image} alt={author} mr='2rem' fallbackSrc = '/blank.png' />
                 <Box display='flex' flexDirection='column' color='black' justifyContent='space-evenly' height='5rem' alignItems='flex-start' mb='0.5rem'>
                     <Text fontSize='xl' fontWeight='semibold'>{name}</Text>
                     <Text fontSize='sm' color='blue' fontWeight='semibold'>

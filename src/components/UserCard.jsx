@@ -5,11 +5,6 @@ import { Link as profileLink } from 'react-router-dom';
 
 export default function UserCard({ username, image, followers, followHandler }) {
     const [loading, setLoading] = useState(false)
-    const [imageError, setImageError] = useState(false)
-
-    const imageDisplayHandler = () => {
-        setImageError(true)
-    }
 
     return (
         <Box bgColor='cyan' p='1rem' width='100%' d='flex' flexDirection='column' borderRadius='12px' boxShadow='lg' mb = '1rem'>
@@ -26,11 +21,7 @@ export default function UserCard({ username, image, followers, followHandler }) 
                         @{username}
                     </Link>
                 </Text>
-                {!imageError ?
-                    <Image borderRadius='50%' width='35px' height='35px' objectFit='cover' src={image} alt={username} onError={imageDisplayHandler} />
-                    :
-                    <Image borderRadius='50%' width='35px' height='35px' objectFit='cover' src='/blank.png' alt='null' />
-                }
+                <Image borderRadius='50%' width='35px' height='35px' objectFit='cover' src={image} alt={username}fallbackSrc='/blank.png' />
             </Box>
 
             <Box d='flex' justifyContent='space-between' alignItems='center' mt='1rem'>
