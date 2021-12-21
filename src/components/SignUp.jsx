@@ -13,7 +13,7 @@ export default function SignUp() {
     const emailRef = useRef()
     const passwordRef = useRef()
     const confirmPasswordRef = useRef()
-    const url = window.location.href.includes('localhost') ? 'http://localhost:3000' : `https://programmers-social-media-rails.herokuapp.com`
+    const url = window.location.href.includes('localhost') ? 'http://localhost:4000' : `https://geek-overflow-backend.herokuapp.com`
     const history = useHistory()
     const toast = useToast()
 
@@ -43,7 +43,7 @@ export default function SignUp() {
             if (response.status !== 200) {
                 let errorMessage = await response.json()
                 console.log(errorMessage)
-                setErrorMessage(errorMessage.errors.join('. '))
+                setErrorMessage(errorMessage.message)
                 setButtonLoading(false)
                 toast({
                     title: "We Encountered an Error",

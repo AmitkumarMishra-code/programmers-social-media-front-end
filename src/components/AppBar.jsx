@@ -28,12 +28,12 @@ export default function AppBar() {
                 window.localStorage.removeItem('access_Token')
                 window.localStorage.removeItem('refresh_Token')
                 
-                // toast({
-                //     title: 'Logged Out!',
-                //     isClosable: true,
-                //     duration: 2000,
-                //     status: 'info'
-                // })
+                toast({
+                    title: 'Logged Out!',
+                    isClosable: true,
+                    duration: 2000,
+                    status: 'info'
+                })
                 history.push('/')
             }
         }

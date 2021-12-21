@@ -13,7 +13,7 @@ export default function Login() {
     const usernameRef = useRef()
     const passwordRef = useRef()
     const history = useHistory()
-    const url = window.location.href.includes('localhost') ? 'http://localhost:3000' : `https://programmers-social-media-rails.herokuapp.com`
+    const url = window.location.href.includes('localhost') ? 'http://localhost:4000' : `https://geek-overflow-backend.herokuapp.com`
 
     const showPasswordHandler = () => {
         setShowPassword('text')

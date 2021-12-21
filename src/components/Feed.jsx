@@ -22,7 +22,6 @@ export default function Feed() {
         try {
             let response = await axios.get(postsUrl)
             let data = await response.data
-            console.log(data)
 
             if (response.status !== 200) {
                 setIsLoading(false)
@@ -146,7 +145,7 @@ export default function Feed() {
                                 id={post._id}
                                 index={idx}
                                 name = {post.author.name}
-                                image = {post.author.photoURL}
+                                image = {axios.defaults.baseURL + (post.author.photoURL.includes('static/') ? post.author.photoURL.substring(6) : post.author.photoURL)}
                             />)
                         }
                         {
