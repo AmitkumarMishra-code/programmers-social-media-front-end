@@ -75,7 +75,7 @@ export default function Profile() {
                 setIsFollowing(false)
             }
             else {
-                setUser({ ...user, currentlyFollowing: !user.currentlyFollowing, followers: user.currentlyFollowing ? user.followers - 1 : user.followers + 1 })
+                setUser({ ...user, currentlyFollowing: !user.currentlyFollowing, following: user.currentlyFollowing ? user.following - 1 : user.following + 1 })
                 setIsFollowing(false)
                 toast({
                     title: user.currentlyFollowing ? 'Unfollowed!' : 'Followed!',
