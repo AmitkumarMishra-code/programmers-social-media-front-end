@@ -13,7 +13,7 @@ export default function SignUp() {
     const emailRef = useRef()
     const passwordRef = useRef()
     const confirmPasswordRef = useRef()
-    const url = window.location.href.includes('localhost') ? 'http://localhost:3000' : `https://geek-overflow-backend.herokuapp.com`
+    const url = window.location.href.includes('localhost') ? 'http://localhost:3000' : `https://programmers-social-media-rails.herokuapp.com`
     const history = useHistory()
     const toast = useToast()
 
