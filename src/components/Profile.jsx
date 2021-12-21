@@ -19,7 +19,7 @@ export default function Profile() {
         try {
             let response = await axios.get(link)
             let data = await response.data
-
+            console.log(data)
             if (response.status !== 200) {
                 console.log('in status false')
                 toast({
@@ -86,7 +86,13 @@ export default function Profile() {
             }
         }
         catch (error) {
-            alert(error.message)
+            toast({
+                title: 'An Error Occurred',
+                description: error.message,
+                status: 'error',
+                isClosable: true,
+                duration: 2000
+            })
             setIsFollowing(false)
         }
     }
@@ -128,7 +134,7 @@ export default function Profile() {
                     user &&
                     <Box d='flex' justifyContent='center' alignItems='center' flexDirection='column' mb='2rem' width='50%'>
                         <Text fontSize='4xl' fontWeight='bold' mb='1rem'>{user.name}</Text>
-                       <Image mb='1rem' borderRadius='50%' width='125px' height='125px' objectFit='cover' src={axios.defaults.baseURL + (user.photoURL.includes('static/') ? user.photoURL.substring(6) : user.photoURL)} fallbackSrc='/blank.png'/>
+                       <Image mb='1rem' borderRadius='50%' width='125px' height='125px' objectFit='cover' src={user.photoURL} fallbackSrc='/blank.png'/>
                         <Box display='flex' justifyContent='center' alignItems='center' width='100%' mb='1rem'>
                             <Text fontSize='md' fontWeight='bold' mr='3rem'>@{user.username}</Text>
                             {!user.self &&
@@ -168,7 +174,7 @@ export default function Profile() {
                         id={post._id}
                         index={idx}
                         name={post.author.name}
-                        image={axios.defaults.baseURL + (post.author.photoURL.includes('static/') ? post.author.photoURL.substring(6) : post.author.photoURL)}
+                        image={post.author.photoURL}
                     />)
                 }
                 {

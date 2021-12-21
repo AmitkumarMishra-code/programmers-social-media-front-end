@@ -30,6 +30,7 @@ export default function Suggestions({ getPosts }) {
         setIsLoading(true)
         let response = await axios.get(usersUrl)
         let data = await response.data
+        console.log(data)
         if (response.status !== 200) {
             setIsLoading(false)
             toast({
@@ -108,7 +109,7 @@ export default function Suggestions({ getPosts }) {
                 suggestionsToDisplay.map((user, idx) => <UserCard
                     key={idx}
                     username={user.username}
-                    image={axios.defaults.baseURL + (user.photoURL.includes('static/') ? user.photoURL.substring(6) : user.photoURL)}
+                    image={user.photoURL}
                     followers={user.followers.length}
                     followHandler={followHandler}
                 />

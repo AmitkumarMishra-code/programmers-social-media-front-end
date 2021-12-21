@@ -2,7 +2,7 @@ import axios from 'axios'
 
 
 export default function interceptors(history) {
-    axios.defaults.baseURL = window.location.href.includes('localhost') ? 'http://localhost:4000' : `https://geek-overflow-backend.herokuapp.com`
+    axios.defaults.baseURL = window.location.href.includes('localhost') ? 'http://localhost:3000' : `https://geek-overflow-backend.herokuapp.com`
 
     axios.interceptors.request.use(function(req) {
         // Do something before request is sent
